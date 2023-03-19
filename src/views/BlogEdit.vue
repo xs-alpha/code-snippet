@@ -50,7 +50,7 @@
           <MonacoEditor class="my-editor"
                         height="600"
                         language="typescript"
-                        :code="code"
+                        :code="ruleForm.content"
                         :editorOptions="options"
                         @mounted="onMounted"
                         @codeChange="onCodeChange"
@@ -108,19 +108,23 @@ export default {
 
   methods: {
     onMounted(editor) {
+      console.log("onmounted:", editor)
       this.editor = editor;
     },
     onCodeChange(editor) {
-      console.log(editor.getValue());
+      this.ruleForm.content = editor.get()
+      // console.log("code:change:",editor.getValue());
     },
     handleChange(value) {
-      console.log(value);
+      console.log("code handle change:", value);
     },
     autoSave() {
       if (this.timer) {
         clearInterval(this.timer);
       }
       this.timer = setInterval(() => {
+        debugger
+        this.code = this.ruleForm.content
         console.log("suto save enter")
         // this.ruleForm.title.length!=0&&this.ruleForm.description.length!=0
         if (this.ruleForm.id != undefined) {
@@ -232,7 +236,8 @@ export default {
         this.ruleForm.isTop = blog.isTop
         this.ruleForm.weight = blog.weight
         this.ruleForm.content = blog.content
-        // this.ruleForm.code= blog.content
+        this.ruleForm.code = blog.content
+        this.code = blog.content
         console.log("content:code: ", this.ruleForm.content)
       })
       this.editor.trigger('', 'editor.action.format')
@@ -261,5 +266,7 @@ export default {
 
 .my-editor {
   text-align: inherit;
+  text-align: left;
 }
+
 </style>
