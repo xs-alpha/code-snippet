@@ -1,0 +1,42 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "ace-builds": "^1.16.0",
+    "axios": "^0.19.2",
+    "codemirror": "^6.0.1",
+    "core-js": "^3.6.5",
+    "easy-affix": "^1.0.8",
+    "ec-vue-timeline": "^0.1.2",
+    "element-ui": "^2.13.2",
+    "github-markdown-css": "^4.0.0",
+    "h5-floating-menu": "^1.1.3",
+    "markdown-it": "^11.0.0",
+    "mavon-editor": "^2.10.4",
+    "vue": "^2.6.11",
+    "vue-affix": "^0.5.2",
+    "vue-calendar-component": "^2.8.2",
+    "vue-drag-ball": "^0.0.1",
+    "vue-floating-buttons": "^1.0.1",
+    "vue-monaco-editor": "^0.0.19",
+    "vue-router": "^3.2.0",
+    "vue-sticky-bubble": "^0.2.3",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-plugin-vuex": "~4.4.0",
+    "@vue/cli-service": "~4.4.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
