@@ -63,7 +63,7 @@ export default {
   methods: {
     toEdit() {
       // TODO:测试后要!=
-      if (this.$store.getters.getUserInfo.id == this.blog.userId) {
+      if (this.$store.getters.getUserInfo.id != this.blog.userId) {
         this.$message({
           type: "error",
           message: "对不起！你并非博文发布者无法编辑修改！"
@@ -129,7 +129,9 @@ export default {
 
         this.blog.content = result;
         // 判断是否为该作者，是才能编辑
-        this.ownBlog = blog.userId === this.$store.getters.getUserInfo.id;
+        // TODO: 要解开注释
+        // this.ownBlog = blog.userId === this.$store.getters.getUserInfo.id;
+
       });
     }
   }

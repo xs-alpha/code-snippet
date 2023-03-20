@@ -49,7 +49,7 @@
           <!--          <mavon-editor v-model="ruleForm.content"></mavon-editor>-->
           <MonacoEditor class="my-editor"
                         height="600"
-                        language="typescript"
+                        :language="ruleForm.codeLanguage"
                         :code="ruleForm.content"
                         :editorOptions="options"
                         @mounted="onMounted"
@@ -83,6 +83,7 @@ export default {
         selectOnLineNumbers: false
       },
       ruleForm: {
+        id:'',
         title: "",
         description: "",
         hide: 1,
@@ -108,16 +109,52 @@ export default {
 
   methods: {
     onMounted(editor) {
+      this.initData()
+      if (editor.getValue()!=""){
+        localStorage.setItem("code", editor.getValue())
+      }
+      if ((editor.getValue()!=""||editor.getValue()!=undefined)&&(this.ruleForm.id!="")){
+        let code = localStorage.getItem("code");
+        // code = JSON.parse(code);
+        editor.setValue(code)
+      }
       console.log("onmounted:", editor)
       this.editor = editor;
     },
     onCodeChange(editor) {
-      this.ruleForm.content = editor.get()
+      this.ruleForm.content = editor.getValue()
+      localStorage.setItem("code", editor.getValue())
       // console.log("code:change:",editor.getValue());
     },
     handleChange(value) {
       console.log("code handle change:", value);
     },
+    initData(){
+      let blogId = this.$route.params.blogId
+      if (blogId) {
+        this.$axios.get("/blog/" + blogId).then(res => {
+          let blog = res.data.data
+          this.ruleForm.id = blog.id
+          this.ruleForm.title = blog.title
+          this.ruleForm.description = blog.description
+          this.ruleForm.hide = blog.hide
+          this.ruleForm.isTop = blog.isTop
+          this.ruleForm.weight = blog.weight
+          debugger;
+          let codeContent = blog.content
+          this.ruleForm.content = codeContent
+          this.ruleForm.code = codeContent
+          this.code = codeContent
+          console.log("content:code: ", this.ruleForm.content)
+          if (localStorage.getItem("code") == "" || localStorage.getItem("code") == undefined||localStorage.getItem("code")!=codeContent) {
+            localStorage.setItem("code", codeContent)
+              this.editor.setValue(codeContent)
+          }
+          console.log("content:code: ", this.ruleForm.content)
+        })
+      }
+    }
+      ,
     autoSave() {
       if (this.timer) {
         clearInterval(this.timer);
@@ -127,7 +164,7 @@ export default {
         this.code = this.ruleForm.content
         console.log("suto save enter")
         // this.ruleForm.title.length!=0&&this.ruleForm.description.length!=0
-        if (this.ruleForm.id != undefined) {
+        if (this.ruleForm.id!="") {
           const _this = this;
           this.$axios
               .post("/blog/edit", this.ruleForm, {
@@ -170,7 +207,7 @@ export default {
                       type: "info",
                       message: '操作成功！已返回首页！'
                     });
-                    _this.$router.push("/myBlog");
+                    _this.$router.push("/blog");
                   }
                 });
               });
@@ -192,22 +229,8 @@ export default {
     },
   },
   created() {
-    let blogId = this.$route.params.blogId
-    if (blogId) {
-      this.$axios.get("/blog/" + blogId).then(res => {
-        let blog = res.data.data
-        this.ruleForm.id = blog.id
-        this.ruleForm.title = blog.title
-        this.ruleForm.description = blog.description
-        this.ruleForm.hide = blog.hide
-        this.ruleForm.isTop = blog.isTop
-        this.ruleForm.weight = blog.weight
-        this.ruleForm.content = blog.content
-        this.code = blog.content
-        console.log("content:code: ", this.ruleForm.content)
-      })
-    }
 
+    this.initData()
     this.autoSave()
 
   },
@@ -225,24 +248,10 @@ export default {
       language: 'javascript'
     });
 
-    let blogId = this.$route.params.blogId
-    if (blogId) {
-      this.$axios.get("/blog/" + blogId).then(res => {
-        let blog = res.data.data
-        this.ruleForm.id = blog.id
-        this.ruleForm.title = blog.title
-        this.ruleForm.description = blog.description
-        this.ruleForm.hide = blog.hide
-        this.ruleForm.isTop = blog.isTop
-        this.ruleForm.weight = blog.weight
-        this.ruleForm.content = blog.content
-        this.ruleForm.code = blog.content
-        this.code = blog.content
-        console.log("content:code: ", this.ruleForm.content)
-      })
+    this.initData()
+      // 两种情况： 一种新打开界面，另一种打开另一个
       this.editor.trigger('', 'editor.action.format')
     }
-  },
 
 };
 </script>

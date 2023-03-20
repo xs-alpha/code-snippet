@@ -16,8 +16,8 @@ export default {
     return {
       menuItems: [
         {text: '首页', link: '/', active: true},
-        {text: '产品', link: '/products', active: false},
-        {text: '服务', link: '/services', active: false},
+        {text: '发布', link: '/blog/add', active: false},
+        {text: '分类', link: '/services', active: false},
         {text: '关于我们', link: '/about', active: false},
         {text: '联系我们', link: '/contact', active: false},
       ],
