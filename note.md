@@ -369,3 +369,7 @@ t.appendChild(o)}}function x(t,e){var n=e.css,a=e.media,r=e.sourceMap;if(a&&t.se
 sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */")
 ,t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(
 document.createTextNode(n))}}}])}));
+
+https://github.com/cnu4/vue-codemirror-lite :好像语言也是写死的
+https://github.com/logue/vue-codemirror6   语言可变
+https://github.com/surmon-china/vue-codemirror   star最多

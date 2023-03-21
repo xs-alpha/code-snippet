@@ -20,6 +20,7 @@ import GetMyPeroidTask from "@/views/GetMyPeroidTask";
 import MyEssay from "../views/MyEssay";
 import EssayDetail from "@/views/EssayDetail";
 import EssayEdit from "@/views/EssayEdit";
+import LangTags from "@/views/LangTags";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/blog',
         name: 'Blog',
         component: Blog
+    },
+    {
+        path: '/tag',
+        name: 'LangTags',
+        component: LangTags
     },
     {
         path: '/myTask',

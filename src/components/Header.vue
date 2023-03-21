@@ -11,21 +11,7 @@
           <router-link v-else :to="item.link">{{ item.text }}</router-link>
         </li>
 <!--          <a style="color: white; font-weight: bold" v-if="isLogin">退出</a>-->
-          <button v-if="isLogin" @click="logout">退出</button>
-
-          <!--          <li v-for="(item, index) in menuItems" :key="index" :class="{ active: item.active }">-->
-<!--              <router-link :to="item.link" v-if="item.text !== '登录' && (!isLogin || item.text !== '退出')">{{ item.text }}</router-link>-->
-<!--              <span style="color: white; font-weight: bold" v-else-if="isLogin && item.text !== '退出'">{{ user.username }}</span>-->
-<!--              <a v-else-if="isLogin && item.text === '退出'" @click.prevent="logout">{{ item.text }}</a>-->
-<!--              <router-link v-else :to="item.link">{{ item.text }}</router-link>-->
-<!--          </li>-->
-<!--          <li v-for="(item, index) in menuItems" :key="index" :class="{ active: item.active }">-->
-<!--              <router-link v-if="item.text !== '登录' && (item.text !== '退出' || isLogin)" :to="item.link">{{ item.text }}</router-link>-->
-<!--              <span style="color: white; font-weight: bold" v-else-if="isLogin && item.text !== '退出'">{{ user.username }}</span>-->
-<!--              <a v-else-if="item.text === '退出'" href="" @click.prevent="logout">{{ item.text }}</a>-->
-<!--              <router-link v-else :to="item.link">{{ item.text }}</router-link>-->
-<!--          </li>-->
-<!--          <router-link v-if="isLogin" @click="logout">退出</router-link>-->
+          <el-button class="tuichu" v-if="isLogin" @click="logout" size="mini" style="background-color: Transparent" type="text">退出</el-button>
 
       </ul>
     </nav>
@@ -44,7 +30,7 @@ export default {
       menuItems: [
         {text: '首页', link: '/', active: true},
         {text: '发布', link: '/blog/add', active: false},
-        {text: '分类', link: '/services', active: false},
+        {text: '分类', link: '/tag', active: false},
         {text: '登录', link: '/login', active: false},
         {text: '注册', link: '/register', active: false},
       ],
@@ -78,7 +64,14 @@ body {
   margin: 0;
   padding: 0;
 }
-
+.tuichu{
+    color: transparent;
+}
+.tuichu:hover{
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+}
 nav {
   padding-top: 0;
   background-color: #333;
