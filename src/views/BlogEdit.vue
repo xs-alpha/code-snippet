@@ -17,6 +17,10 @@
           <el-input type="textarea" v-model="ruleForm.description" placeholder="请填写简介"></el-input>
         </el-form-item>
 
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="ruleForm.remark" placeholder="填写备注"></el-input>
+        </el-form-item>
+
         <el-form-item label="简介" prop="description">
           <el-switch
               v-model="ruleForm.hide"
@@ -44,7 +48,28 @@
             </el-input-number>
           </div>
         </el-form-item>
-
+        <el-form-item label="设置">
+          <el-row>
+            <el-button v-if="ruleForm.isShare===1" v-model="ruleForm.shareUrl" type="primary">点击复制分享链接</el-button>
+          <el-switch class="switch-class"
+                  v-model="ruleForm.isShare"
+                  :active-value=1
+                  :inactive-value=0
+                  active-text="分享"
+                  inactive-text="不分享"
+                  active-color="#13ce66"
+                  inactive-color="#999">
+          </el-switch>
+          <el-select class="select-language" v-model="ruleForm.codeLanguage" clearable placeholder="请选择">
+            <el-option
+                    v-for="item in codeLanguageOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+            </el-option>
+          </el-select>
+          </el-row>
+        </el-form-item>
         <el-form-item label="内容" prop="content">
           <!--          <mavon-editor v-model="ruleForm.content"></mavon-editor>-->
           <MonacoEditor class="my-editor"
@@ -78,6 +103,41 @@ export default {
   components: {Header, Footer, MonacoEditor},
   data() {
     return {
+      codeLanguageOptions:[{
+        value: 'java',
+        label: 'java'
+      }, {
+        value: 'go',
+        label: 'go'
+      }, {
+        value: 'python',
+        label: 'python'
+      },
+        {
+          value: 'json',
+          label: 'json'
+        },{
+        value: 'c',
+        label: 'c'
+      }, {
+        value: 'c++',
+        label: 'c++'
+      }, {
+        value: 'javascript',
+        label: 'javascript'
+      }, {
+        value: 'shell',
+        label: 'shell'
+      },{
+        value: 'c#',
+        label: 'c#'
+      },{
+        value: 'ruby',
+        label: 'ruby'
+      },{
+        value: 'rust',
+        label: 'rust'
+      }],
       code: '// Type away! \n',
       options: {
         selectOnLineNumbers: false
@@ -85,9 +145,13 @@ export default {
       ruleForm: {
         id:'',
         title: "",
+          remark:"",
+        codeLanguage:"",
+        shareUrl:"",
         description: "",
         hide: 1,
         isTop: 0,
+        isShare: 0,
         weight: 1,
         content: "",
         author: this.$store.getters.getUserInfo.username
@@ -124,7 +188,13 @@ export default {
     },
     onCodeChange(editor) {
       this.ruleForm.content = editor.getValue()
+      // editor.setProperty({
+      //   language: this.ruleForm.codeLanguage
+      // })
+      //   editor.setProperty("language", this.ruleForm.codeLanguage)
+      // monaco.editor.language = this.ruleForm.codeLanguage
       localStorage.setItem("code", editor.getValue())
+      this.editor = editor
       // console.log("code:change:",editor.getValue());
     },
     handleChange(value) {
@@ -141,6 +211,8 @@ export default {
           this.ruleForm.hide = blog.hide
           this.ruleForm.isTop = blog.isTop
           this.ruleForm.weight = blog.weight
+          this.ruleForm.remark= blog.remark
+          this.ruleForm.codeLanguage= blog.codeLanguage
           debugger;
           let codeContent = blog.content
           this.ruleForm.content = codeContent
@@ -220,8 +292,6 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-
-
     }
   },
   watch: {
@@ -246,7 +316,7 @@ export default {
     // 初始化编辑器
     this.editor = monaco.editor.create(this.$refs.editorContainer, {
       value: 'initial code',
-      language: 'javascript'
+      language: 'java'
     });
 
     this.initData()
@@ -278,5 +348,12 @@ export default {
   text-align: inherit;
   text-align: left;
 }
+.select-language{
+  float: right;
+}
+  .switch-class{
+    float: left;
+    padding-top: 20px;
+  }
 
 </style>
