@@ -10,6 +10,23 @@
           <span style="color: white; font-weight: bold" v-else-if="isLogin">{{ user.username }}</span>
           <router-link v-else :to="item.link">{{ item.text }}</router-link>
         </li>
+<!--          <a style="color: white; font-weight: bold" v-if="isLogin">退出</a>-->
+          <button v-if="isLogin" @click="logout">退出</button>
+
+          <!--          <li v-for="(item, index) in menuItems" :key="index" :class="{ active: item.active }">-->
+<!--              <router-link :to="item.link" v-if="item.text !== '登录' && (!isLogin || item.text !== '退出')">{{ item.text }}</router-link>-->
+<!--              <span style="color: white; font-weight: bold" v-else-if="isLogin && item.text !== '退出'">{{ user.username }}</span>-->
+<!--              <a v-else-if="isLogin && item.text === '退出'" @click.prevent="logout">{{ item.text }}</a>-->
+<!--              <router-link v-else :to="item.link">{{ item.text }}</router-link>-->
+<!--          </li>-->
+<!--          <li v-for="(item, index) in menuItems" :key="index" :class="{ active: item.active }">-->
+<!--              <router-link v-if="item.text !== '登录' && (item.text !== '退出' || isLogin)" :to="item.link">{{ item.text }}</router-link>-->
+<!--              <span style="color: white; font-weight: bold" v-else-if="isLogin && item.text !== '退出'">{{ user.username }}</span>-->
+<!--              <a v-else-if="item.text === '退出'" href="" @click.prevent="logout">{{ item.text }}</a>-->
+<!--              <router-link v-else :to="item.link">{{ item.text }}</router-link>-->
+<!--          </li>-->
+<!--          <router-link v-if="isLogin" @click="logout">退出</router-link>-->
+
       </ul>
     </nav>
   </div>
@@ -23,7 +40,7 @@ export default {
             username: "请先登录",
             avatar: require("@/asserts/img/default_user.jpg"),
         },
-        isLogin:false,
+        isLogin:null,
       menuItems: [
         {text: '首页', link: '/', active: true},
         {text: '发布', link: '/blog/add', active: false},
@@ -33,6 +50,19 @@ export default {
       ],
     };
   },
+    methods:{
+        logout() {
+            const _this = this
+            _this.$axios.get("/logout", {
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            }).then(res => {
+                _this.$store.commit("rmUserInfo")
+                _this.$router.push('/login')
+            })
+        },
+    },
     created() {
         if (this.$store.getters.getUserInfo.username) {
             this.user.username = this.$store.getters.getUserInfo.username
