@@ -113,7 +113,8 @@ export default {
       if (editor.getValue()!=""){
         localStorage.setItem("code", editor.getValue())
       }
-      if ((editor.getValue()!=""||editor.getValue()!=undefined)&&(this.ruleForm.id!="")){
+      let blogId = this.$route.params.blogId;
+      if ((editor.getValue()!=""||editor.getValue()!=undefined)&&(blogId!=undefined)){
         let code = localStorage.getItem("code");
         // code = JSON.parse(code);
         editor.setValue(code)

@@ -18,8 +18,8 @@ export default {
         {text: '首页', link: '/', active: true},
         {text: '发布', link: '/blog/add', active: false},
         {text: '分类', link: '/services', active: false},
-        {text: '关于我们', link: '/about', active: false},
-        {text: '联系我们', link: '/contact', active: false},
+        {text: '登录', link: '/login', active: false},
+        {text: '注册', link: '/register', active: false},
       ],
     };
   },

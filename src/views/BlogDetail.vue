@@ -23,9 +23,36 @@
             <p>{{ blog.isBlogHide }}</p>
           </a>
         </div>
+        <div class="new-meta-item date">
+          <i class="el-icon-bangzhu" aria-hidden="true"></i>
+          <a class="notlink">
+
+            <p>{{ blog.codeLanguage }}</p>
+          </a>
+        </div>
       </div>
 
-      <el-button-group class="button">
+      <div class="new-meta-box meta-box-remark">
+        <div class="new-meta-item date">
+          <i class="el-icon-s-claim" aria-hidden="true"></i>
+          <a class="notlink">
+
+            <p>{{ blog.remark }}</p>
+          </a>
+        </div>
+      </div>
+      <br />
+      <div class="new-meta-box meta-box-desc">
+        <div class="new-meta-item date">
+          <i class="el-icon-s-ticket" aria-hidden="true"></i>
+          <a class="notlink">
+
+            <p>{{ blog.description }}</p>
+          </a>
+        </div>
+      </div>
+
+      <el-button-group class="button group-button">
         <el-button type="primary" icon="el-icon-edit" @click="toEdit">编辑</el-button>
         <el-button type="danger" icon="el-icon-delete" @click="toDelete">删除</el-button>
       </el-button-group>
@@ -121,11 +148,17 @@ export default {
         this.blog.gmtCreate = blog.gmtCreate;
         this.blog.author = blog.author;
         this.blog.isBlogHide = blog.isBlogHide;
+        this.blog.codeLanguage = blog.codeLanguage;
+        this.blog.remark= blog.remark;
+        this.blog.description= blog.description;
+        let content = blog.content;
+        content = "```"+blog.codeLanguage+"\n"+content +"\n```"
         // 进行css渲染
         let MardownIt = require("markdown-it");
         let md = new MardownIt();
 
-        let result = md.render(blog.content);
+        let result = md.render(content);
+        console.log("md_content:"+content)
 
         this.blog.content = result;
         // 判断是否为该作者，是才能编辑
@@ -206,4 +239,14 @@ h1 {
   width: 70%;
   margin: 0 auto;
 }
+  .meta-box-remark{
+    width: 100%;
+  }
+.meta-box-desc{
+  width: 100%;
+}
+  .group-button{
+      margin-right: 30px;
+    padding-left: 80%;
+  }
 </style>
