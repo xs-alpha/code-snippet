@@ -2,8 +2,13 @@
   <div class="nav-wrapper">
     <nav class="nav">
       <ul class="header-link">
+<!--        <li v-for="(item, index) in menuItems" :key="index" :class="{ active: item.active }">-->
+<!--          <router-link :to="item.link">{{ item.text }}</router-link>-->
+<!--        </li>-->
         <li v-for="(item, index) in menuItems" :key="index" :class="{ active: item.active }">
-          <router-link :to="item.link">{{ item.text }}</router-link>
+          <router-link :to="item.link" v-if="item.text !== '登录'">{{ item.text }}</router-link>
+          <span style="color: white; font-weight: bold" v-else-if="isLogin">{{ user.username }}</span>
+          <router-link v-else :to="item.link">{{ item.text }}</router-link>
         </li>
       </ul>
     </nav>
@@ -14,6 +19,11 @@
 export default {
   data() {
     return {
+        user: {
+            username: "请先登录",
+            avatar: require("@/asserts/img/default_user.jpg"),
+        },
+        isLogin:false,
       menuItems: [
         {text: '首页', link: '/', active: true},
         {text: '发布', link: '/blog/add', active: false},
@@ -23,6 +33,13 @@ export default {
       ],
     };
   },
+    created() {
+        if (this.$store.getters.getUserInfo.username) {
+            this.user.username = this.$store.getters.getUserInfo.username
+            this.user.avatar = this.$store.getters.getUserInfo.avatar
+            this.isLogin = true
+        }
+    }
 };
 </script>
 

@@ -194,7 +194,6 @@ export default {
       //   editor.setProperty("language", this.ruleForm.codeLanguage)
       // monaco.editor.language = this.ruleForm.codeLanguage
       localStorage.setItem("code", editor.getValue())
-      this.editor = editor
       // console.log("code:change:",editor.getValue());
     },
     handleChange(value) {
