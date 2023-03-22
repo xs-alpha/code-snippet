@@ -15,31 +15,52 @@
               <!--            总是显示-->
               <el-col :span="24">
                 <div class="grid-content bg-purple code-title">
-                  <div>
+                  <h3 style="margin-bottom: 10px">
                     <router-link class="link bolg-link" :to="{name:'BlogDetail',params:{blogId: blog.id}}">{{
                         blog.title
                       }}
                     </router-link>
-                  </div>
-                  <el-descriptions class="descriptions-wrapper"
-                                   :data="[{ label: '用户名', value: blog.author }, { label: '提交时间', value: blog.gmtCreate }, { label: '备注', value: blog.remark }, { label: '语言', value: blog.codeLanguage }, { label: '描述', value: blog.description }, { label: 'code', value: blog.content }]">
-                    <template v-slot:title="{ row }">
-                      <router-link class="link bolg-link" :to="{name:'BlogDetail',params:{blogId: blog.id}}">
-                        {{ blog.title }}
-                      </router-link>
-                    </template>
-                    <el-descriptions-item label="用户名" :column="4" label-class-name="my-label" content-class-name="my-content" >
-                      <router-link class="link" :to="{name:'User',params:{username:blog.author}}">{{ blog.author }}
-                      </router-link>
-                    </el-descriptions-item>
-                    <el-descriptions-item label="提交时间">{{ blog.gmtCreate }}</el-descriptions-item>
-                    <el-descriptions-item label="备注">{{ blog.remark }}</el-descriptions-item>
-                    <el-descriptions-item label="语言" :span="1">
-                      <el-tag size="small">{{ blog.codeLanguage }}</el-tag>
-                    </el-descriptions-item>
-                    <el-descriptions-item label="描述">{{ blog.description }}</el-descriptions-item>
-                    <el-descriptions-item label="code" :span="2">{{ blog.content }}</el-descriptions-item>
-                  </el-descriptions>
+                  </h3>
+<!--                  <el-descriptions class="descriptions-wrapper"-->
+<!--                                   :data="[{ label: '用户名', value: blog.author }, { label: '提交时间', value: blog.gmtCreate }, { label: '备注', value: blog.remark }, { label: '语言', value: blog.codeLanguage }, { label: '描述', value: blog.description }, { label: 'code', value: blog.content }]">-->
+<!--                    <template v-slot:title="{ row }">-->
+<!--                      <router-link class="link bolg-link" :to="{name:'BlogDetail',params:{blogId: blog.id}}">-->
+<!--                        {{ blog.title }}-->
+<!--                      </router-link>-->
+<!--                    </template>-->
+<!--                    <el-descriptions-item label="用户名" :column="4" label-class-name="my-label" content-class-name="my-content" >-->
+<!--                      <router-link class="link" :to="{name:'User',params:{username:blog.author}}">{{ blog.author }}-->
+<!--                      </router-link>-->
+<!--                    </el-descriptions-item>-->
+<!--                    <el-descriptions-item label="提交时间">{{ blog.gmtCreate }}</el-descriptions-item>-->
+<!--                    <el-descriptions-item label="备注">{{ blog.remark }}</el-descriptions-item>-->
+<!--                    <el-descriptions-item label="语言" :span="1">-->
+<!--                      <el-tag size="small">{{ blog.codeLanguage }}</el-tag>-->
+<!--                    </el-descriptions-item>-->
+<!--                    <el-descriptions-item label="描述">{{ blog.description }}</el-descriptions-item>-->
+<!--                    <el-descriptions-item label="code" :span="2">{{ blog.content }}</el-descriptions-item>-->
+<!--                  </el-descriptions>-->
+                    <div style="overflow:hidden; font-weight: normal">
+                      <el-row :gutter="10">
+                        <el-col :span="7"><div class="grid-content bg-purple">用户名:<router-link class="link" :to="{name:'User',params:{username:blog.author}}">{{ blog.author }}
+                        </router-link>
+                        </div></el-col>
+                        <el-col :span="9"><div class="grid-content bg-purple-light">提交时间：{{ blog.commitTime }}</div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple-light">语言：<el-tag size="small">{{ blog.codeLanguage }}</el-tag></div></el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24"><div class="grid-content bg-purple">描述：{{ blog.description}}</div></el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24"><div class="grid-content bg-purple" style="font-weight: lighter;font-size: 13px">备注：{{ blog.remark }}</div></el-col>
+                      </el-row>
+                      <el-col :span="24">
+                        <div class="grid-content bg-purple" style="float: left; white-space: nowrap;overflow:hidden;">
+                          code：
+                          <p style="display: inline;font-size: 12px;font-weight: lighter;font-family: 'JetBrains Mono ExtraLight'">{{ blog.content }}</p>
+                        </div>
+                      </el-col>
+                    </div>
                 </div>
               </el-col>
             </el-card>
@@ -144,7 +165,7 @@ body {
 .each-card {
   height: 220px;
   margin-top: 20px;
-  /*background-color: #d8e484;*/
+  background-color: #d8e484;
 }
 
 .el-descriptions-item__container a {
@@ -175,6 +196,12 @@ body {
 
 .my-content {
   background: #FDE2E2;
+}
+  .el-row{
+    margin-bottom:3px;
+  }
+.grid-content{
+  min-height: 26px;
 }
 </style>
 <!--contentStyle="background:#d8e484" labelStyle="background:#d8e484"-->

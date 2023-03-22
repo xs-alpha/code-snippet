@@ -12,7 +12,7 @@
           <i class="el-icon-s-order" aria-hidden="true"></i>
           <a class="notlink">
 
-            <p>{{ blog.gmtCreate }}</p>
+            <p>{{ blog.commitTime }}</p>
           </a>
         </div>
 
@@ -150,6 +150,7 @@ export default {
         this.blog.isBlogHide = blog.isBlogHide;
         this.blog.codeLanguage = blog.codeLanguage;
         this.blog.remark= blog.remark;
+        this.blog.commitTime= blog.commitTime;
         this.blog.description= blog.description;
         let content = blog.content;
         content = "```"+blog.codeLanguage+"\n"+content +"\n```"
