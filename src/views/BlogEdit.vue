@@ -50,7 +50,7 @@
         </el-form-item>
         <el-form-item label="设置">
           <el-row>
-            <el-button v-if="ruleForm.isShare===1" v-model="ruleForm.shareUrl" type="primary">点击复制分享链接</el-button>
+            <el-button v-if="ruleForm.isShare===1" v-model="ruleForm.shareUrl" type="primary" @click="generateCode">点击复制分享链接</el-button>
           <el-switch class="switch-class"
                   v-model="ruleForm.isShare"
                   :active-value=1
@@ -98,12 +98,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 // import MonacoEditor from '@/components/MonacoEditor.vue'
 import MonacoEditor from 'vue-monaco-editor'
+import md5 from 'js-md5';
 
 export default {
   components: {Header, Footer, MonacoEditor},
   data() {
     return {
       codeLanguageOptions:[{
+        value: 'sql',
+        label: 'sql'
+      },{
         value: 'java',
         label: 'java'
       }, {
@@ -145,6 +149,7 @@ export default {
       ruleForm: {
         id:'',
         title: "",
+        shareCode:"",
           remark:"",
         codeLanguage:"",
         shareUrl:"",
@@ -156,6 +161,7 @@ export default {
         content: "",
         author: this.$store.getters.getUserInfo.username
       },
+      clipboard:null,
       nums: 0,
       timer: null,// 初始定时器变量名为null
       rules: {
@@ -172,13 +178,38 @@ export default {
   },
 
   methods: {
+    generateCode(){
+      let text = this.guid();
+      let _this = this;
+      this.$copyText(text)
+              .then(e => {
+                _this.$notify({
+                  title: '成功',
+                  message: '复制成功',
+                  type: 'success'
+                });
+                      }, function(e) {
+                _this.$notify({
+                  title: '失败',
+                  message: '复制失败',
+                  type: 'error'
+                });
+                      }
+              );
+    },
     guid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-     var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
-     let scode = v.toString(16).replace("-", "");
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[8] = s[13] = s[18] = s[23] = "-";
 
-     });
+      var uuid = s.join("").replace("-","");
+      let md = md5("code");
+     return md+"-"+uuid;
     },
     onMounted(editor) {
       this.initData()
@@ -219,6 +250,8 @@ export default {
           this.ruleForm.isTop = blog.isTop
           this.ruleForm.weight = blog.weight
           this.ruleForm.remark= blog.remark
+          this.ruleForm.shareCode= blog.shareCode
+          this.ruleForm.isShare= blog.isShare
           this.ruleForm.codeLanguage= blog.codeLanguage
           debugger;
           let codeContent = blog.content
@@ -233,6 +266,17 @@ export default {
           console.log("content:code: ", this.ruleForm.content)
         })
       }
+    },
+    initClipBoard(){
+      // this.clipboard = new ClipboardJS('.btn');
+      //
+      // this.clipboard.on('success', (event) => {
+      //   console.log('Copied to clipboard');
+      // });
+      //
+      // this.clipboard.on('error', (event) => {
+      //   console.error('Failed to copy to clipboard');
+      // });
     }
       ,
     autoSave() {
@@ -240,7 +284,7 @@ export default {
         clearInterval(this.timer);
       }
       this.timer = setInterval(() => {
-        debugger
+        // debugger
         this.code = this.ruleForm.content
         console.log("suto save enter")
         // this.ruleForm.title.length!=0&&this.ruleForm.description.length!=0
@@ -309,6 +353,7 @@ export default {
   created() {
 
     this.initData()
+    this.initClipBoard()
     this.autoSave()
 
   },
@@ -326,10 +371,18 @@ export default {
       language: 'java'
     });
 
+    this.initClipBoard()
+
     this.initData()
       // 两种情况： 一种新打开界面，另一种打开另一个
       this.editor.trigger('', 'editor.action.format')
+    },
+  beforeDestroy() {
+    if (this.clipboard) {
+      this.clipboard.destroy();
     }
+  }
+
 
 };
 </script>

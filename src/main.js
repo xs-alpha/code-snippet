@@ -13,7 +13,11 @@ import "ec-vue-timeline/lib/ec-vue-timeline.css";
 
 import './axios'
 import './permisssion'
+import Notifications from 'vue-notification'
 
+Vue.use(Notifications)
+import VueClipboard from 'vue-clipboard2';
+Vue.use(VueClipboard);
 Vue.config.productionTip = false
 Vue.use(EcTimeline);
 Vue.use(Element)

@@ -28,7 +28,7 @@
                         {{ blog.title }}
                       </router-link>
                     </template>
-                    <el-descriptions-item label="用户名" :column="4">
+                    <el-descriptions-item label="用户名" :column="4" label-class-name="my-label" content-class-name="my-content" >
                       <router-link class="link" :to="{name:'User',params:{username:blog.author}}">{{ blog.author }}
                       </router-link>
                     </el-descriptions-item>
@@ -144,6 +144,7 @@ body {
 .each-card {
   height: 220px;
   margin-top: 20px;
+  /*background-color: #d8e484;*/
 }
 
 .el-descriptions-item__container a {
@@ -156,7 +157,6 @@ body {
   font-size: 16px;
   font-weight: bold;
 }
-
 .bolg-link:hover {
   /*background-color: ;*/
   text-decoration: none;
@@ -169,4 +169,12 @@ body {
 .first-blog {
   margin-top: 60px; /* 设置距离顶部的距离 */
 }
+.my-label {
+  background: #E1F3D8;
+}
+
+.my-content {
+  background: #FDE2E2;
+}
 </style>
+<!--contentStyle="background:#d8e484" labelStyle="background:#d8e484"-->
