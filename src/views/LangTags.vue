@@ -5,16 +5,16 @@
       <el-col :span="5"><div class="grid-content bg-purple"></div></el-col>
       <el-col :span="14"><div class="grid-content bg-purple">
 
-        <div v-for="o in 10" :key="o" class="text item">
+        <div v-for="(code,index) in tagList" class="text item">
           <el-card class="box-card" style="background-color: #88c2fa">
             <div slot="header" class="clearfix">
-              <span><h2 style="text-align: center">java
+              <span><h2 style="text-align: center">{{code.codeLanguage}}
 <!--                          <router-link :to="/blog">java</router-link>-->
 <!--                                <router-link class="link" :to="{name:'LangTags',params:{blogId:blog.id}}">{{o+'java'}}</router-link>-->
               </h2></span>
               <!--            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
             </div>
-            <span style="font-size: xx-small">代码段数量：</span>
+            <span style="font-size: xx-small">代码段数量：{{code.codeNums}}</span>
           </el-card>
         </div>
 
@@ -40,6 +40,7 @@ export default {
       drawer: false,
       message: "",
       total: 0,
+      tagList:[],
       loading: false,
       pageSize: 5,
       deviceType: '',
@@ -49,14 +50,11 @@ export default {
   },
 
   methods: {
-    getPage(currentPage) {
+    getPage() {
       this.loading = true;
       const _this = this;
-      _this.$axios.get("/blogs?currentPage=" + currentPage).then(res => {
-        _this.blogContents = res.data.data.records;
-        _this.currentPage = res.data.data.current;
-        _this.total = res.data.data.total;
-        _this.pageSize = res.data.data.size;
+      _this.$axios.get("/codeNums" ).then(res => {
+        _this.tagList = res.data.data;
       }).catch(() => {
         console.log("请求发生错误")
         alert("请求发生错误，请看官稍后重试鸭")

@@ -182,7 +182,7 @@ export default {
       let text = this.guid();
       let _this = this;
       debugger;
-      if (_this.ruleForm.shareCode!=""){
+      if (_this.ruleForm.shareCode==""){
         this.ruleForm.shareCode = text;
       }else{
         // TODO:加上前缀
