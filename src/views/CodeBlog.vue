@@ -21,10 +21,28 @@
                       }}
                     </router-link>
                   </h3>
-
+<!--                  <el-descriptions class="descriptions-wrapper"-->
+<!--                                   :data="[{ label: '用户名', value: blog.author }, { label: '提交时间', value: blog.gmtCreate }, { label: '备注', value: blog.remark }, { label: '语言', value: blog.codeLanguage }, { label: '描述', value: blog.description }, { label: 'code', value: blog.content }]">-->
+<!--                    <template v-slot:title="{ row }">-->
+<!--                      <router-link class="link bolg-link" :to="{name:'BlogDetail',params:{blogId: blog.id}}">-->
+<!--                        {{ blog.title }}-->
+<!--                      </router-link>-->
+<!--                    </template>-->
+<!--                    <el-descriptions-item label="用户名" :column="4" label-class-name="my-label" content-class-name="my-content" >-->
+<!--                      <router-link class="link" :to="{name:'User',params:{username:blog.author}}">{{ blog.author }}-->
+<!--                      </router-link>-->
+<!--                    </el-descriptions-item>-->
+<!--                    <el-descriptions-item label="提交时间">{{ blog.gmtCreate }}</el-descriptions-item>-->
+<!--                    <el-descriptions-item label="备注">{{ blog.remark }}</el-descriptions-item>-->
+<!--                    <el-descriptions-item label="语言" :span="1">-->
+<!--                      <el-tag size="small">{{ blog.codeLanguage }}</el-tag>-->
+<!--                    </el-descriptions-item>-->
+<!--                    <el-descriptions-item label="描述">{{ blog.description }}</el-descriptions-item>-->
+<!--                    <el-descriptions-item label="code" :span="2">{{ blog.content }}</el-descriptions-item>-->
+<!--                  </el-descriptions>-->
                     <div style="overflow:hidden; font-weight: normal">
                       <el-row :gutter="10">
-                        <el-col :span="7"><div class="grid-content bg-purple">用户名:<router-link class="link" :to="{name:'BlogDetail',params:{blogId: blog.id}}">{{ blog.author }}
+                        <el-col :span="7"><div class="grid-content bg-purple">用户名:<router-link class="link" :to="{name:'User',params:{username:blog.author}}">{{ blog.author }}
                         </router-link>
                         </div></el-col>
                         <el-col :span="9"><div class="grid-content bg-purple-light">提交时间：{{ blog.commitTime }}</div></el-col>
@@ -87,7 +105,10 @@ export default {
     getPage(currentPage) {
       this.loading = true;
       const _this = this;
-      _this.$axios.get("/codes?currentPage=" + currentPage).then(res => {
+      debugger
+      this.codeLanguage = window.location.href.split("code/")[1].trimEnd();
+      console.log("currentpage：", currentPage)
+      _this.$axios.get("/blogtag/"+this.codeLanguage+"?currentPage=" + currentPage).then(res => {
         _this.blogContents = res.data.data.records;
         _this.currentPage = res.data.data.current;
         _this.total = res.data.data.total;
@@ -151,6 +172,7 @@ body {
   /*background-image: linear-gradient(to right, #e6e6fa, #ffffff);*/
   background-image: linear-gradient(to right, #e6e6fa, #96ceb4);
 }
+
 
 .el-descriptions-item__container a {
   text-decoration: none;

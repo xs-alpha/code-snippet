@@ -8,10 +8,9 @@
         <div v-for="(code,index) in tagList" class="text item">
           <el-card class="box-card" style="background-color: #88c2fa">
             <div slot="header" class="clearfix">
-              <span><h2 style="text-align: center">{{code.codeLanguage}}
-<!--                          <router-link :to="/blog">java</router-link>-->
-<!--                                <router-link class="link" :to="{name:'LangTags',params:{blogId:blog.id}}">{{o+'java'}}</router-link>-->
-              </h2></span>
+              <h2 style="text-align: center">
+                                <router-link class="link" :to="{name:'CodeBlog',params:{codeLanguage:code.codeLanguage}}">{{code.codeLanguage}}</router-link>
+              </h2>
               <!--            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
             </div>
             <span style="font-size: xx-small">代码段数量：{{code.codeNums}}</span>

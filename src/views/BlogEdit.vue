@@ -99,6 +99,7 @@ import Footer from "@/components/Footer";
 // import MonacoEditor from '@/components/MonacoEditor.vue'
 import MonacoEditor from 'vue-monaco-editor'
 import md5 from 'js-md5';
+import axios from "_axios@0.19.2@axios";
 
 export default {
   components: {Header, Footer, MonacoEditor},
@@ -188,6 +189,7 @@ export default {
         // TODO:加上前缀
         text = _this.ruleForm.shareCode
       }
+      text = axios.defaults.shareUrl+"/codeId?code="+text
       this.$copyText(text)
               .then(e => {
                 _this.$notify({
@@ -244,7 +246,7 @@ export default {
     initData(){
       let blogId = this.$route.params.blogId
       if (blogId) {
-        this.$axios.get("/blog/" + blogId).then(res => {
+        this.$axios.get("/code/" + blogId).then(res => {
           let blog = res.data.data
           this.ruleForm.id = blog.id
           this.ruleForm.title = blog.title
@@ -287,14 +289,14 @@ export default {
         clearInterval(this.timer);
       }
       this.timer = setInterval(() => {
-        // debugger
+        debugger
         this.code = this.ruleForm.content
         console.log("suto save enter")
         // this.ruleForm.title.length!=0&&this.ruleForm.description.length!=0
         if (this.ruleForm.id!="") {
           const _this = this;
           this.$axios
-              .post("/blog/edit", this.ruleForm, {
+              .post("/code/edit", this.ruleForm, {
                 headers: {
                   Authorization: localStorage.getItem("token")
                 }
@@ -321,7 +323,7 @@ export default {
           }
           const _this = this;
           this.$axios
-              .post("/blog/edit", this.ruleForm, {
+              .post("/code/edit", this.ruleForm, {
                 headers: {
                   Authorization: localStorage.getItem("token")
                 }
@@ -334,7 +336,7 @@ export default {
                       type: "info",
                       message: '操作成功！已返回首页！'
                     });
-                    _this.$router.push("/blog");
+                    _this.$router.push("/code");
                   }
                 });
               });
@@ -361,12 +363,7 @@ export default {
 
   },
 
-  beforeDestroy() {
-    clearInterval(this.timer);
-    this.timer = null // 这里最好清除一下，回归默认值
-    // 众所周知，定时器返回一个随机整数，用于表示定时器的编号，后面通过名字可以取消这个定时器的执行。
-    console.log("this.timer", this.timer);
-  },
+
   mounted() {
     // 初始化编辑器
     this.editor = monaco.editor.create(this.$refs.editorContainer, {
@@ -384,6 +381,10 @@ export default {
     if (this.clipboard) {
       this.clipboard.destroy();
     }
+    clearInterval(this.timer);
+    this.timer = null // 这里最好清除一下，回归默认值
+    // 众所周知，定时器返回一个随机整数，用于表示定时器的编号，后面通过名字可以取消这个定时器的执行。
+    console.log("this.timer", this.timer);
   }
 
 

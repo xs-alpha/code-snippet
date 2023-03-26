@@ -21,6 +21,7 @@ import MyEssay from "../views/MyEssay";
 import EssayDetail from "@/views/EssayDetail";
 import EssayEdit from "@/views/EssayEdit";
 import LangTags from "@/views/LangTags";
+import CodeBlog from "@/views/CodeBlog";
 
 Vue.use(VueRouter)
 
@@ -31,7 +32,7 @@ const routes = [
         redirect: {name: "Blog"}
     },
     {
-        path: '/blog',
+        path: '/code',
         name: 'Blog',
         component: Blog
     },
@@ -123,6 +124,11 @@ const routes = [
         path: '/blog/:blogId',
         name: 'BlogDetail',
         component: BlogDetail
+    },
+    {
+        path: '/code/:codeLanguage',
+        name: 'CodeBlog',
+        component: CodeBlog
     },
     {
         path: '/essay/:blogId',

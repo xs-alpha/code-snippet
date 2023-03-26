@@ -84,7 +84,7 @@ export default {
         userId: "",
         avatar: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
       },
-      ownBlog: true   // TODO:改false
+      ownBlog: false   // TODO:改false
     };
   },
   methods: {
@@ -115,7 +115,7 @@ export default {
               });
             } else {
               this.$axios
-                  .get("/blog/delete/" + this.blog.id, {
+                  .get("/code/delete/" + this.blog.id, {
                     headers: {
                       Authorization: localStorage.getItem("token")
                     }
@@ -140,7 +140,7 @@ export default {
   created() {
     let blogId = this.$route.params.blogId;
     if (blogId) {
-      this.$axios.get("/blog/" + blogId).then(res => {
+      this.$axios.get("/code/" + blogId).then(res => {
         let blog = res.data.data;
         this.blog.id = blog.id;
         this.blog.title = blog.title;
@@ -164,7 +164,7 @@ export default {
         this.blog.content = result;
         // 判断是否为该作者，是才能编辑
         // TODO: 要解开注释
-        // this.ownBlog = blog.userId === this.$store.getters.getUserInfo.id;
+        this.ownBlog = blog.userId === this.$store.getters.getUserInfo.id;
 
       });
     }

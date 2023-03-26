@@ -10,6 +10,7 @@
     "@vue/composition-api": "^1.7.1",
     "ace-builds": "^1.16.0",
     "axios": "^0.19.2",
+    "axios-retry": "^3.4.0",
     "codemirror": "^6.0.1",
     "core-js": "^3.6.5",
     "easy-affix": "^1.0.8",

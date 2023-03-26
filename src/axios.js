@@ -1,11 +1,23 @@
 ﻿import axios from 'axios'
+import axiosRetry from 'axios-retry'
 import Element from 'element-ui'
 import store from './store'
 import router from './router'
 
-axios.defaults.baseURL = "http://localhost:9090"  // 注意请开启springboot 不然数据有可能无法访问。
-// axios.defaults.baseURL = "http://diary.devilwst.top:28769"  // 注意请开启springboot 不然数据有可能无法访问。
-axios.defaults.timeout = 3000;
+axiosRetry(axios, { // 添加自动重试机制
+    retries: 3, // 设置重试次数
+    retryDelay: (retryCount) => {
+        return retryCount * 1000; // 设置重试间隔，这里使用指数退避策略
+    }
+});
+
+// axios.defaults.baseURL = "http://localhost:9090"
+axios.defaults.baseURL = "http://code.devilwst.top:28769"
+axios.defaults.timeout = 3000
+
+// axios.defaults.shareUrl = "http://localhost:9090"
+axios.defaults.shareUrl = "http://codeShare.devilwst.top"
+
 // 前置拦截
 axios.interceptors.request.use(config => {
     return config
