@@ -211,7 +211,7 @@ export default {
   padding: 60px 15px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   width: 80%;
-  margin: 60px auto;
+  margin: 80px auto;
   min-height: 700px;
 }
 

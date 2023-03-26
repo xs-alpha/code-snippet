@@ -56,7 +56,20 @@
         <div class="grid-content bg-purple"></div>
       </el-col>
     </el-row>
-
+    <div class="pagenation">
+<!--      <el-pagination class="pager" background layout="prev, pager, next"-->
+<!--                     :current-page="currentPage"-->
+<!--                     :page-size="pageSize"-->
+<!--                     :total="total"-->
+<!--                     @current-change="getPage">-->
+<!--      </el-pagination>-->
+      <el-pagination
+          :page-size="20"
+          :pager-count="11"
+          layout="prev, pager, next"
+          :total="total">
+      </el-pagination>
+    </div>
     <Footer></Footer>
   </div>
 
@@ -74,9 +87,9 @@ export default {
       currentPage: 1,
       drawer: false,
       message: "",
-      total: 0,
+      total: 1,
       loading: false,
-      pageSize: 5,
+      pageSize: 15,
       deviceType: '',
       yiyan: "",
       avatar: require("@/asserts/img/default_user.jpg"),
@@ -87,11 +100,12 @@ export default {
     getPage(currentPage) {
       this.loading = true;
       const _this = this;
+      debugger
       _this.$axios.get("/codes?currentPage=" + currentPage).then(res => {
         _this.blogContents = res.data.data.records;
         _this.currentPage = res.data.data.current;
-        _this.total = res.data.data.total;
-        _this.pageSize = res.data.data.size;
+        _this.total = parseInt(res.data.data.total);
+        _this.pageSize = parseInt(res.data.data.size);
       }).catch(() => {
         console.log("请求发生错误")
         alert("请求发生错误，请看官稍后重试鸭")
@@ -186,6 +200,15 @@ body {
   }
 .grid-content{
   min-height: 26px;
+}
+.pagenation{
+  width: 60px;
+  margin: 40px auto;
+  height: 60px;
+}
+.el-row{
+  margin-left: 0px  !important;
+  margin-right: 0px  !important;
 }
 </style>
 <!--contentStyle="background:#d8e484" labelStyle="background:#d8e484"-->

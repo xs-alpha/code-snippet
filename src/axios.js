@@ -11,12 +11,17 @@ axiosRetry(axios, { // 添加自动重试机制
     }
 });
 
-// axios.defaults.baseURL = "http://localhost:9090"
-axios.defaults.baseURL = "http://code.devilwst.top:28769"
+var ProdEnv = false
+if (ProdEnv){
+    axios.defaults.baseURL = "http://code.devilwst.top:28769"
+    axios.defaults.shareUrl = "http://codeShare.devilwst.top"
+}else{
+    axios.defaults.baseURL = "http://localhost:9090"
+    axios.defaults.shareUrl = "http://localhost:9090"
+}
+
 axios.defaults.timeout = 3000
 
-// axios.defaults.shareUrl = "http://localhost:9090"
-axios.defaults.shareUrl = "http://codeShare.devilwst.top"
 
 // 前置拦截
 axios.interceptors.request.use(config => {

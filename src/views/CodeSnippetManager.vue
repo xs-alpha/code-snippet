@@ -221,7 +221,7 @@ button:hover {
 .code-snippet__title {
   font-weight: bold;
   font-size: 16px;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
 }
 
 .code-snippet__actions {
@@ -231,7 +231,7 @@ button:hover {
 
 .code-snippet__delete-button {
   background-color: #ff5c5c;
-  margin-left: 10px;
+  /*margin-left: 10px;*/
 }
 
 .code-snippet__delete-button:hover {
