@@ -65,7 +65,7 @@
 <!--      </el-pagination>-->
       <el-pagination
           :page-size="20"
-          :pager-count="11"
+          :pager-count="15"
           layout="prev, pager, next"
           :total="total">
       </el-pagination>

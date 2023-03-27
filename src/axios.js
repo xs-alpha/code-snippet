@@ -11,7 +11,7 @@ axiosRetry(axios, { // 添加自动重试机制
     }
 });
 
-var ProdEnv = false
+var ProdEnv = true
 if (ProdEnv){
     axios.defaults.baseURL = "http://code.devilwst.top:28769"
     axios.defaults.shareUrl = "http://codeShare.devilwst.top"

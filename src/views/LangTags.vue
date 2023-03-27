@@ -143,4 +143,8 @@ body {
   float: left;
   margin-left: 3rem;
 }
+.el-row{
+  margin-left: 0px  !important;
+  margin-right: 0px  !important;
+}
 </style>
